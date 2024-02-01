@@ -21,6 +21,10 @@ const StyledMemeImage = styled.img`
   border: 2px solid black;
   margin: 20px 0;
 `;
+// New styled component for text input
+const StyledTextInput = styled(Input)`
+  margin-bottom: 10px;
+`;
 
 function Meme() {
   const [meme, setMeme] = useState({
