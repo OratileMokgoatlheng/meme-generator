@@ -107,7 +107,12 @@ function Meme() {
       };
     });
   };
-
+  const handleChangeTextStyle = (style) => {
+    setTextStyle((prevTextStyle) => ({
+      ...prevTextStyle,
+      [style]: !prevTextStyle[style],
+    }));
+  };
   return (
     <StyledMemeContainer>
       {loading ? (
