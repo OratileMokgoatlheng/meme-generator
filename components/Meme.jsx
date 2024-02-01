@@ -37,7 +37,12 @@ function Meme() {
   const [allMemes, setAllMemes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
+ // New state for text styling options
+ const [textStyle, setTextStyle] = useState({
+  bold: false,
+  italic: false,
+  underline: false,
+});
   useEffect(() => {
     fetch("https://api.imgflip.com/get_memes")
       .then((res) => res.json())
