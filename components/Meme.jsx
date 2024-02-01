@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Input } from "@mui/material";
+import { Button, Input, Select, MenuItem } from "@mui/material";
 import styled from "styled-components";
 
 const StyledMemeContainer = styled.div`
@@ -12,6 +12,9 @@ const StyledMemeContainer = styled.div`
 const StyledMemeText = styled.div`
   font-size: ${(props) => props.fontSize || "24px"};
   color: ${(props) => props.color || "white"};
+  font-weight: ${(props) => props.bold ? "bold" : "normal"};
+  font-style: ${(props) => props.italic ? "italic" : "normal"};
+  text-decoration: ${(props) => props.underline ? "underline" : "none"};
   text-shadow: 2px 2px 2px black;
 `;
 
@@ -21,7 +24,7 @@ const StyledMemeImage = styled.img`
   border: 2px solid black;
   margin: 20px 0;
 `;
-// New styled component for text input
+
 const StyledTextInput = styled(Input)`
   margin-bottom: 10px;
 `;
@@ -37,12 +40,18 @@ function Meme() {
   const [allMemes, setAllMemes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
- // New state for text styling options
- const [textStyle, setTextStyle] = useState({
-  bold: false,
-  italic: false,
-  underline: false,
-});
+
+  const [textStyle, setTextStyle] = useState({
+    bold: false,
+    italic: false,
+    underline: false,
+  });
+
+  const [background, setBackground] = useState({
+    color: "#ffffff",
+    image: "",
+  });
+
   useEffect(() => {
     fetch("https://api.imgflip.com/get_memes")
       .then((res) => res.json())
@@ -75,15 +84,24 @@ function Meme() {
     img.onload = () => {
       canvas.width = img.width;
       canvas.height = img.height;
-      ctx.drawImage(img, 0, 0);
-      ctx.font = "bold 30px Arial";
-      ctx.fillStyle = "white";
-      ctx.textAlign = "center";
 
-      // Top text
+      // Draw background
+      ctx.fillStyle = background.color;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Draw image
+      ctx.drawImage(img, 0, 0);
+
+      // Draw top text
+      ctx.font = `bold ${textStyle.bold ? '30' : '24'}px Arial`;
+      ctx.fillStyle = textStyle.color || "white";
+      ctx.textAlign = "center";
       ctx.fillText(meme.topText, canvas.width / 2, 40);
 
-      // Bottom text
+      // Draw bottom text
+      ctx.font = `bold ${textStyle.bold ? '30' : '24'}px Arial`;
+      ctx.fillStyle = textStyle.color || "white";
+      ctx.textAlign = "center";
       ctx.fillText(meme.bottomText, canvas.width / 2, canvas.height - 20);
 
       const dataURL = canvas.toDataURL("image/png");
@@ -107,12 +125,21 @@ function Meme() {
       };
     });
   };
+
   const handleChangeTextStyle = (style) => {
     setTextStyle((prevTextStyle) => ({
       ...prevTextStyle,
       [style]: !prevTextStyle[style],
     }));
   };
+
+  const handleChangeBackground = (event) => {
+    setBackground((prevBackground) => ({
+      ...prevBackground,
+      [event.target.name]: event.target.value,
+    }));
+  };
+
   return (
     <StyledMemeContainer>
       {loading ? (
@@ -121,38 +148,102 @@ function Meme() {
         <p>{error}</p>
       ) : (
         <>
-          <Input
+          {/* Top Text Input with Styling Options */}
+          <StyledTextInput
             placeholder="Top text here..."
             type="text"
-            className="input--text"
             value={meme.topText}
             name="topText"
             onChange={handleChange}
           />
-          <Input
+          <div>
+            <Button
+              variant="contained"
+              onClick={() => handleChangeTextStyle("bold")}
+            >
+              Bold
+            </Button>
+            <Button
+              variant="contained"
+              onClick={() => handleChangeTextStyle("italic")}
+            >
+              Italic
+            </Button>
+            <Button
+              variant="contained"
+              onClick={() => handleChangeTextStyle("underline")}
+            >
+              Underline
+            </Button>
+          </div>
+
+          {/* Bottom Text Input with Styling Options */}
+          <StyledTextInput
             placeholder="Bottom text here..."
             type="text"
-            className="input--text"
             value={meme.bottomText}
             name="bottomText"
             onChange={handleChange}
           />
+          <div>
+            <Button
+              variant="contained"
+              onClick={() => handleChangeTextStyle("bold")}
+            >
+              Bold
+            </Button>
+            <Button
+              variant="contained"
+              onClick={() => handleChangeTextStyle("italic")}
+            >
+              Italic
+            </Button>
+            <Button
+              variant="contained"
+              onClick={() => handleChangeTextStyle("underline")}
+            >
+              Underline
+            </Button>
+          </div>
+
+          {/* Background Color and Image Options */}
+          <div>
+            <Input
+              type="color"
+              value={background.color}
+              name="color"
+              onChange={handleChangeBackground}
+            />
+            <Select
+              value={background.image}
+              name="image"
+              onChange={handleChangeBackground}
+            >
+              <MenuItem value="">No Background Image</MenuItem>
+              {/* Add additional background images as needed */}
+            </Select>
+          </div>
+
+          {/* Get Meme Image Button */}
           <Button
-            className="submit--button"
             variant="contained"
             onClick={getMemeImage}
           >
             Get a new meme image 🦘
           </Button>
+
+          {/* Display Meme */}
           <StyledMemeContainer>
-            <StyledMemeText fontSize="32px" color="white">
+            <StyledMemeText fontSize={textStyle.bold ? "32px" : "24px"} color={textStyle.color}>
               {meme.topText}
             </StyledMemeText>
             <StyledMemeImage src={meme.randomImage} alt="Meme" />
-            <StyledMemeText fontSize="32px" color="white">
+            <StyledMemeText fontSize={textStyle.bold ? "32px" : "24px"} color={textStyle.color}>
               {meme.bottomText}
             </StyledMemeText>
           </StyledMemeContainer>
+
+          {/* Download Meme Button */}
           <Button variant="contained" onClick={handleDownload}>
             Download Meme
           </Button>
