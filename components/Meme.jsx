@@ -28,6 +28,7 @@ const StyledMemeImage = styled.img`
   max-width: 600px;
   border: 2px solid black;
   margin: 20px 0;
+  border-radius: 10px;
 `;
 
 const StyledTextInput = styled(Input)`
