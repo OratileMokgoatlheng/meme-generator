@@ -2,11 +2,16 @@ import React, { useEffect, useState } from "react";
 import { Button, Input, Select, MenuItem } from "@mui/material";
 import styled from "styled-components";
 
+// Styled components for the meme generator
 const StyledMemeContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-top: 20px;
+  padding: 20px;
+  background-color: #f0f0f0;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 `;
 
 const StyledMemeText = styled.div`
