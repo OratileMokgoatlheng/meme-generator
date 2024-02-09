@@ -1,12 +1,10 @@
 import styled from "styled-components";
 
+// Styled components for the header
 const HeaderContainer = styled.header`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  background-color: #282c34; /* Add your preferred background color */
+  background: linear-gradient(135deg, #2980b9, #2c3e50); /* Gradient background */
   padding: 20px;
+  text-align: center;
 `;
 
 const HeaderImage = styled.img`
