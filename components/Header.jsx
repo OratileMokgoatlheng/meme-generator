@@ -8,10 +8,11 @@ const HeaderContainer = styled.header`
 `;
 
 const HeaderImage = styled.img`
-  width: 100px; /* Adjust the width as needed */
-  height: 100px; /* Adjust the height as needed */
+  width: 80px;
+  height: auto;
+  border-radius: 50%; /* Circular image */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Soft shadow */
 `;
-
 const ProjectName = styled.h3`
   margin-top: 10px; /* Adjust the margin as needed */
   font-size: 1.5rem; /* Adjust the font size as needed */
