@@ -13,16 +13,17 @@ const HeaderImage = styled.img`
   border-radius: 50%; /* Circular image */
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Soft shadow */
 `;
-const ProjectName = styled.h3`
-  margin-top: 10px; /* Adjust the margin as needed */
-  font-size: 1.5rem; /* Adjust the font size as needed */
-  color: white; /* Add your preferred text color */
+const ProjectName = styled.h1`
+  margin-top: 10px;
+  font-size: 2.5rem;
+  color: #fff;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Text shadow for contrast */
 `;
 
 const ProjectDescription = styled.p`
-  margin-top: 5px; /* Adjust the margin as needed */
-  font-size: 1rem; /* Adjust the font size as needed */
-  color: lightgray; /* Add your preferred text color */
+  margin-top: 5px;
+  font-size: 1.2rem;
+  color: #f1f1f1; /* Light text color */
 `;
 
 function Header() {
