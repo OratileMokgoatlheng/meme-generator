@@ -33,6 +33,12 @@ const StyledMemeImage = styled.img`
 
 const StyledTextInput = styled(Input)`
   margin-bottom: 10px;
+  width: 100%;
+  max-width: 400px;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 16px;
 `;
 
 function Meme() {
